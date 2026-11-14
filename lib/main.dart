@@ -1,37 +1,44 @@
-
-// ignore_for_file: deprecated_member_use, unused_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter_run_tracker_app/views/splash_screen_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+//--------------------------------------------------------------------
 void main() async {
-  // ------ ติดต่อกับ supabase โปรเจคของเรา ------
+  //----- โค้ดติดต่อกับ Supabase โปรเจ็กต์ที่เราจะทำงานด้วย -----
   WidgetsFlutterBinding.ensureInitialized();
+
   await Supabase.initialize(
     url: 'https://znwbkzhwyzjdgggtehsw.supabase.co',
     publishableKey: 'sb_publishable_ep_cRPlW2QQPKtCzcb0LPQ_nuUUovGg',
   );
-  //-------------------------------------------
-  runApp(const RunTrackerApp());
+  //----------------------------------------------------
+
+  runApp(
+    FlutterRunTrackerApp(),
+  );
 }
 
-class RunTrackerApp extends StatefulWidget {
-  const RunTrackerApp({super.key});
+//--------------------------------------------------------------------
+class FlutterRunTrackerApp extends StatefulWidget {
+  const FlutterRunTrackerApp({super.key});
 
   @override
-  State<RunTrackerApp> createState() => _RunTrackerAppState();
+  State<FlutterRunTrackerApp> createState() => _FlutterRunTrackerAppState();
 }
 
-class _RunTrackerAppState extends State<RunTrackerApp> {
+class _FlutterRunTrackerAppState extends State<FlutterRunTrackerApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreenUi(),
+      home: SplashScreenUI(),
       theme: ThemeData(
-        fontFamily: GoogleFonts.kanit().fontFamily),
+        textTheme: TextTheme.of(context).apply(
+          fontFamily: GoogleFonts.kanit().fontFamily,
+          fontFamilyFallback: GoogleFonts.kanit().fontFamilyFallback,
+        ),
+      ),
     );
   }
 }

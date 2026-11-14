@@ -1,88 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_run_tracker_app/views/show_all_run_ui.dart';
 
-class SplashScreenUi extends StatefulWidget {
-  SplashScreenUi({super.key});
+class SplashScreenUI extends StatefulWidget {
+  const SplashScreenUI({super.key});
 
   @override
-  State<SplashScreenUi> createState() => _SplashScreenUiState();
+  State<SplashScreenUI> createState() => _SplashScreenUIState();
 }
 
-class _SplashScreenUiState extends State<SplashScreenUi> {
+class _SplashScreenUIState extends State<SplashScreenUI> {
+
   @override
   void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 3), () {
-      if (!mounted) return;
+    // delay หน้าจอ 3 วิ แล้วเปิดไปหน้ิา ShowAllRunUI() แบบย้อนกลับไม่ได้
+    Future.delayed(
+      // เวลาดีเลย์
+      Duration(
+        seconds: 3,
+      ),
+      //เมื่อครบเวลา เปิดไปหน้ิา ShowAllRunUI() แบบย้อนกลับไม่ได้
+      (){
+        if (!mounted) return;
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ShowAllRunUi()),
-      );
-    });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShowAllRunUI(),
+          ),
+        );
+      }
+    );
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF00134D),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      'assets/images/speed.png',
-                      width: 120,
-                      height: 120,
-                    ),
-                    SizedBox(height: 12),
-                    Text(
-                      'RUN TRACKER',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: 18),
-                    SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 3,
-                        valueColor: AlwaysStoppedAnimation(Color(0xFF42629A)),
-                      ),
-                    ),
-                  ],
+      backgroundColor: const Color.fromARGB(255, 5, 1, 80),
+      body: Stack(
+        children: [
+          // ชั้นที่ 1 แสดง Logo ชื่อแอป โปรเกรส ....
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/speed.png',
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  height: MediaQuery.of(context).size.width * 0.45,
+                  fit: BoxFit.cover,
                 ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 18),
-              child: Column(
-                children: [
-                  Text(
-                    '© 2026 RUN TRACKER',
-                    style: TextStyle(
-                      color: Color(0xFF42629A),
-                      fontSize: 10,
-                      letterSpacing: 0.6,
-                    ),
+                Text(
+                  'Run Tracker',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MediaQuery.of(context).size.height * 0.038,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
                   ),
-                  Text(
-                    'Created by Niv Run SAU TEAM',
-                    style: TextStyle(color: Color(0xFF42629A), fontSize: 10),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+                CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+
+          // ชั้นที่ 2 แสดงข้อความด้านล่าง copyright ...
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Copyright © 2026 RUN TRACKER',
+                  style: TextStyle(
+                    color: const Color.fromARGB(158, 153, 152, 152),
+                    fontSize: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                ),
+                Text(
+                  'Created by NinniN SAU TEAM',
+                  style: TextStyle(
+                    color: const Color.fromARGB(158, 153, 152, 152),
+                    fontSize: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
